@@ -7,18 +7,25 @@ import CurrentTrucks from './components/CurrentTrucks'
 import TruckSchedule from './components/TruckSchedule'
 
 export default function FoodTruckView() {
-  let [foodTruckData, setFoodTruckData] = useState([])
+  let [allTruckData, setAllTruckData] = useState([])
+  let [todayTruckData, setTodayTruckData] = useState([])
   let [nearbyTruckData, setNearbyTruckData] = useState([])
   let [currLoc, setCurrLoc] = useState([37.781337576301475, -122.43224052397692])
-  let [distanceLimit, setDistanceLimit] = useState(600) // in yards, ~2 SF city blocks
+  let [distanceLimit, setDistanceLimit] = useState(600) // in feet; 2 SF city blocks is ~600ft
 
   useEffect(() => {
     fetch('https://data.sfgov.org/resource/jjew-r69b.json')
       .then(res => res.json())
-      .then(data => setFoodTruckData(data))
-
-    filterNearby()
+      .then(data => setAllTruckData(data))
   }, [])
+
+  useEffect(() => {
+    filterByToday()
+  }, [allTruckData])
+
+  useEffect(() => {
+    filterNearby()
+  }, [todayTruckData])
 
   function degreesToRadians(degrees) {
     return degrees * Math.PI / 180;
@@ -26,7 +33,7 @@ export default function FoodTruckView() {
 
   function getDistance(lat1, lon1, lat2, lon2) {
     const earthRadiusKm = 6371;
-    const yards = 1093.61329834;
+    const feet = 3280.839895;
 
     var dLat = degreesToRadians(lat2-lat1);
     var dLon = degreesToRadians(lon2-lon1);
@@ -37,21 +44,43 @@ export default function FoodTruckView() {
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var distance = earthRadiusKm * c * yards
+    var distance = earthRadiusKm * c * feet
 
     return distance;
   }
 
   function filterNearby() {
     var nearby = []
-    for (let i=0; i < foodTruckData.length; i++) {
+    for (let i=0; i < todayTruckData.length; i++) {
       // make parseFloat helper function?
-      let truckLoc = [parseFloat(foodTruckData[i].latitude), parseFloat(foodTruckData[i].longitude)]
-      if (distanceLimit >= getDistance(currLoc[0], currLoc[1], truckLoc[0], truckLoc[1])) {
-        nearby.push(foodTruckData[i])
+      let truckLoc = [parseFloat(todayTruckData[i].latitude), parseFloat(todayTruckData[i].longitude)]
+      let distance = getDistance(currLoc[0], currLoc[1], truckLoc[0], truckLoc[1])
+      if (distanceLimit >= distance) {
+        nearby.push({
+          data: todayTruckData[i],
+          distance: Math.ceil(distance / 10) * 10
+        })
       }
     }
+    console.log("nearby ", nearby)
     setNearbyTruckData(nearby)
+  }
+
+  function filterByToday() {
+    var hereToday = []
+
+    var today = new Date();
+    var day = today.getDay()
+
+    for (let i=0; i < allTruckData.length; i++) {
+      // HARDCODED FOR DEMO PURPOSES
+      // otherwise would be compared to "day"
+      if (5 === parseInt(allTruckData[i].dayorder)) {
+        hereToday.push(allTruckData[i])
+      }
+    }
+
+    setTodayTruckData(hereToday)
   }
 
   return (
@@ -67,7 +96,7 @@ export default function FoodTruckView() {
           <div className="current">
             <div className="currentHeader">
               <h1>Right Now</h1>
-              <p>Within 2 city blocks of 23 Major st.</p>
+              <p>Within 2 city blocks of [PLACEHOLDER ADDRESS]</p>
             </div>
             <CurrentTrucks nearbyTrucks={nearbyTruckData} />
           </div>
