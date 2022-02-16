@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
-import CurrentTrucks from './components/CurrentTrucks'
-import TruckSchedule from './components/TruckSchedule'
+import CurrentTrucks from './layouts/CurrentTrucks'
+import TruckSchedule from './layouts/TruckSchedule'
 
 export default function FoodTruckView() {
   let [allTruckData, setAllTruckData] = useState([])
@@ -94,7 +94,7 @@ export default function FoodTruckView() {
       <main className={styles.main}>
         <div className="foodTruckView">
 
-          <div className="current">
+          <div className={styles.section}>
             <div>
               <h1>Nearby Right Now</h1>
               <p>Within 2 city blocks of [PLACEHOLDER ADDRESS]</p>
@@ -102,8 +102,8 @@ export default function FoodTruckView() {
             <CurrentTrucks nearbyTrucks={nearbyTruckData} />
           </div>
 
-          <div className="schedule">
-            <h1 className="header">Trucks Nearby Today</h1>
+          <div className={styles.section}>
+            <h1 className={styles.header}>Trucks Nearby Today</h1>
             <TruckSchedule nearbyTrucks={nearbyTruckData} />
           </div>
         </div>
@@ -113,8 +113,7 @@ export default function FoodTruckView() {
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Powered by Hunger
         </a>
       </footer>
