@@ -95,7 +95,10 @@ export default function FoodTruckView() {
       let searchInput = e.target.value
       let resultStr = allTruckData[i].location.substring(0,searchInput.length)
       if (searchInput.localeCompare(resultStr) === 0) {
-        results.push(allTruckData[i])
+        let exists = results.some(el => el.location === allTruckData[i].location)
+        if (!exists) {
+          results.push(allTruckData[i])
+        }
       }
 
       if (results.length > 5) {
