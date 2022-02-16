@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 import CurrentTrucks from './components/CurrentTrucks'
 import TruckSchedule from './components/TruckSchedule'
@@ -11,7 +11,7 @@ export default function FoodTruckView() {
   let [todayTruckData, setTodayTruckData] = useState([])
   let [nearbyTruckData, setNearbyTruckData] = useState([])
   let [currLoc, setCurrLoc] = useState([37.781337576301475, -122.43224052397692])
-  let [distanceLimit, setDistanceLimit] = useState(600) // in feet; 2 SF city blocks is ~600ft
+  let [distanceLimit, setDistanceLimit] = useState(3000) // in feet; 1 SF city block is ~300ft
 
   useEffect(() => {
     fetch('https://data.sfgov.org/resource/jjew-r69b.json')
@@ -75,7 +75,7 @@ export default function FoodTruckView() {
     for (let i=0; i < allTruckData.length; i++) {
       // HARDCODED FOR DEMO PURPOSES
       // otherwise would be compared to "day"
-      if (5 === parseInt(allTruckData[i].dayorder)) {
+      if (6 === parseInt(allTruckData[i].dayorder)) {
         hereToday.push(allTruckData[i])
       }
     }
@@ -93,16 +93,17 @@ export default function FoodTruckView() {
 
       <main className={styles.main}>
         <div className="foodTruckView">
+
           <div className="current">
-            <div className="currentHeader">
-              <h1>Right Now</h1>
+            <div>
+              <h1>Nearby Right Now</h1>
               <p>Within 2 city blocks of [PLACEHOLDER ADDRESS]</p>
             </div>
             <CurrentTrucks nearbyTrucks={nearbyTruckData} />
           </div>
 
           <div className="schedule">
-            <h1>Food Trucks Throughout Today</h1>
+            <h1 className="header">Trucks Nearby Today</h1>
             <TruckSchedule nearbyTrucks={nearbyTruckData} />
           </div>
         </div>
