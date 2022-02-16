@@ -1,0 +1,47 @@
+@import 'variables';
+
+.current {
+  position: relative;
+}
+.currentTrucksList {
+  position: relative;
+  display: flex;
+  grid-column-gap: 10px;
+  overflow-x: scroll;
+  max-width: 840px;
+}
+
+.infoCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #F7F3F2;
+  border-radius: 6px;
+  padding: 20px;
+  padding-bottom: 28px;
+  min-width: 240px;
+}
+
+.locInfo {
+  width: 100%;
+
+  .distance {
+    opacity: 0.6;
+  }
+}
+
+.mapBtn {
+  position: relative;
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+.noneNearby {
+  width: 100%;
+  padding: 40px;
+  background: $lightgrey;
+  font-family: Circular;
+}
