@@ -23,8 +23,8 @@ export default function CurrentTrucks({ nearbyTrucks }) {
     <div className={ftStyles.currentTrucksList}>
       {currentTrucks.length > 0 ?
         currentTrucks.map((truck, i) =>
-        <div className={ftStyles.infoCardWrapper}>
-          <InfoCard key={i} distance={truck.distance} {...truck.data }/>
+        <div key={i.toString() + truck.data.applicant} className={ftStyles.infoCardWrapper}>
+          <InfoCard distance={truck.distance} {...truck.data }/>
         </div>
       )
       :
