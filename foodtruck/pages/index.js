@@ -151,12 +151,14 @@ export default function FoodTruckView() {
               <h1>Nearby Right Now</h1>
               <p>Within 4 city blocks of {location.name}</p>
             </div>
-            <CurrentTrucks nearbyTrucks={nearbyTruckData} />
+            {nearbyTruckData ?
+              <CurrentTrucks nearbyTrucks={nearbyTruckData} /> : ""}
           </div>
 
           <div className={styles.section}>
             <h1 className={styles.header}>Trucks Nearby Today</h1>
-            <TruckSchedule nearbyTrucks={nearbyTruckData} />
+            {nearbyTruckData ?
+              <TruckSchedule nearbyTrucks={nearbyTruckData} /> : ""}
           </div>
         </div>
       </main>
