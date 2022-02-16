@@ -10,6 +10,7 @@ function TruckTime({
   currentlySelected,
   currentlyHovering,
   handleSelectTruck,
+  handleHoverTruck,
   start24,
   end24
 }) {
@@ -20,15 +21,15 @@ function TruckTime({
     marginLeft: `${startTime * 35}px`,
     width: `${(endTime - startTime) * 35}px`,
     background: `hsl(${200 + (id * 30)}, 90%, 61%)`,
-    opacity: id === (currentlySelected || currentlyHovering) ? 1 : 0.25
+    opacity: id === currentlySelected || id === currentlyHovering ? 1 : 0.25
   }
 
   return (
     <div
       className={ftStyles.truckTime}
       style={truckTimeStyle}
-      onMouseOver={() => handleSelectTruck(id, false)}
-      onClick={() => handleSelectTruck(id, true)} />
+      onMouseOver={() => handleHoverTruck(id)}
+      onClick={() => handleSelectTruck(id)} />
   )
 }
 
@@ -37,14 +38,20 @@ export default function TruckSchedule({ nearbyTrucks }) {
   let [currentlySelected, setCurrentlySelected] = useState(null)
   let [currentlyHovering, setCurrentlyHovering] = useState(null)
 
-  function handleSelectTruck(i, selected) {
-    if (selected) {
+  useEffect(() => {
+    setSelectedTruck(null)
+  }, [nearbyTrucks])
+
+  function handleHoverTruck(i) {
+    setCurrentlyHovering(i)
+    if (currentlySelected === null) {
       setSelectedTruck(i === null ? null : nearbyTrucks[i])
-      setCurrentlySelected(i === null ? null : i)
-    } else {
-      currentlySelected === null ? setSelectedTruck(nearbyTrucks[i]) : ""
-      setCurrentlyHovering(i === null ? null : i)
     }
+  }
+
+  function handleSelectTruck(i) {
+    setSelectedTruck(nearbyTrucks[i])
+    setCurrentlySelected(i)
   }
 
   let timeStamps = Array.from({length: 11}, (_, i) => i + 1)
@@ -53,28 +60,28 @@ export default function TruckSchedule({ nearbyTrucks }) {
   timeStamps.push("🌑")
   timeStamps.splice(12, 0, "🌞")
 
+  // console.log(nearbyTrucks)
+
   return (
     <div className={ftStyles.schedule}>
       <div
         className={ftStyles.scheduleBG}
-        onMouseLeave={() => {
-          currentlySelected === null ? "" : handleSelectTruck(null, false)
-        }}>
+        onMouseLeave={() => setCurrentlyHovering(null)}>
         <div className={ftStyles.timestamps}>
-          {timeStamps.map(time =>
-            <p className={ftStyles.timestamp}>{time}</p>
+          {timeStamps.map((time, i) =>
+            <p key={i} className={ftStyles.timestamp}>{time}</p>
           )}
         </div>
         <div>
           {nearbyTrucks.map((truck, i) =>
             <TruckTime
-              key={i}
+              key={i.toString() + truck.data.applicant}
               id={i}
               currentlySelected={currentlySelected}
               currentlyHovering={currentlyHovering}
               handleSelectTruck={handleSelectTruck}
-              {...truck.data}/>
-          )}
+              handleHoverTruck={handleHoverTruck}
+              {...truck.data}/>)}
         </div>
       </div>
 
