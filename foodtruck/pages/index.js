@@ -28,11 +28,11 @@ export default function FoodTruckView() {
 
   useEffect(() => {
     filterByToday()
-  }, [allTruckData])
+  }, [filterByToday, allTruckData])
 
   useEffect(() => {
     filterNearby()
-  }, [todayTruckData, location])
+  }, [filterNearby, todayTruckData, location])
 
   function degreesToRadians(degrees) {
     return degrees * Math.PI / 180;
