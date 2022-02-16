@@ -8,7 +8,8 @@
 
 .main {
   min-height: 100vh;
-  max-width: 600px;
+  max-width: 840px;
+  min-width: 840px;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -22,7 +23,7 @@
 }
 
 .foodTruckView {
-  position: relative;
+  min-width: 840px;
 }
 
 .footer {

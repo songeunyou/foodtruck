@@ -23,11 +23,13 @@ export default function CurrentTrucks({ nearbyTrucks }) {
     <div className={ftStyles.currentTrucksList}>
       {currentTrucks.length > 0 ?
         currentTrucks.map((truck, i) =>
-        <InfoCard key={i} distance={truck.distance} {...truck.data }/>
+        <div className={ftStyles.infoCardWrapper}>
+          <InfoCard key={i} distance={truck.distance} {...truck.data }/>
+        </div>
       )
       :
       <div className={ftStyles.noneNearby}>
-        No trucks are nearby at this time :(
+        No trucks are nearby at this time
       </div>
       }
     </div>

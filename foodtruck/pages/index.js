@@ -11,7 +11,7 @@ export default function FoodTruckView() {
   let [todayTruckData, setTodayTruckData] = useState([])
   let [nearbyTruckData, setNearbyTruckData] = useState([])
   let [currLoc, setCurrLoc] = useState([37.781337576301475, -122.43224052397692])
-  let [distanceLimit, setDistanceLimit] = useState(3000) // in feet; 1 SF city block is ~300ft
+  let [distanceLimit, setDistanceLimit] = useState(1200) // in feet; 1 SF city block is ~300ft
 
   useEffect(() => {
     fetch('https://data.sfgov.org/resource/jjew-r69b.json')
@@ -62,7 +62,7 @@ export default function FoodTruckView() {
         })
       }
     }
-    console.log("nearby ", nearby)
+
     setNearbyTruckData(nearby)
   }
 
@@ -73,9 +73,7 @@ export default function FoodTruckView() {
     var day = today.getDay()
 
     for (let i=0; i < allTruckData.length; i++) {
-      // HARDCODED FOR DEMO PURPOSES
-      // otherwise would be compared to "day"
-      if (6 === parseInt(allTruckData[i].dayorder)) {
+      if (day === parseInt(allTruckData[i].dayorder)) {
         hereToday.push(allTruckData[i])
       }
     }
@@ -92,12 +90,12 @@ export default function FoodTruckView() {
       </Head>
 
       <main className={styles.main}>
-        <div className="foodTruckView">
+        <div className={styles.foodTruckView}>
 
           <div className={styles.section}>
             <div>
               <h1>Nearby Right Now</h1>
-              <p>Within 2 city blocks of [PLACEHOLDER ADDRESS]</p>
+              <p>Within 4 city blocks of [PLACEHOLDER ADDRESS]</p>
             </div>
             <CurrentTrucks nearbyTrucks={nearbyTruckData} />
           </div>
@@ -111,10 +109,10 @@ export default function FoodTruckView() {
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://ahseeit.com//king-include/uploads/2021/06/thumb_1623169151756-3385582023.jpg"
           target="_blank"
           rel="noopener noreferrer">
-          Powered by Hunger
+          Powered by Hunger 🍔
         </a>
       </footer>
     </div>

@@ -5,7 +5,6 @@ import cs from '../../styles/Components.module.scss'
 
 export default function InfoCard({ starttime, endtime, distance, applicant, optionaltext, location }) {
   let locQuery = location.split(" ").join("+") + "+San+Francisco"
-  console.log(starttime)
 
   return (
     <div className={cs.infoCard}>
