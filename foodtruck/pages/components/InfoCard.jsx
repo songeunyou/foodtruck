@@ -4,7 +4,7 @@ import ftStyles from '../../styles/CurrentTrucks.module.scss'
 import cs from '../../styles/Components.module.scss'
 
 export default function InfoCard({ starttime, endtime, distance, applicant, optionaltext, location }) {
-  let locQuery = location.split(" ").join("+") + "+San+Francisco"
+  let locQuery = location ? location.split(" ").join("+") + "+San+Francisco" : ""
 
   return (
     <div className={cs.infoCard}>

@@ -68,12 +68,12 @@ export default function TruckSchedule({ nearbyTrucks }) {
         className={ftStyles.scheduleBG}
         onMouseLeave={() => setCurrentlyHovering(null)}>
         <div className={ftStyles.timestamps}>
-          {timeStamps.map((time, i) =>
+          {timeStamps ? timeStamps.map((time, i) =>
             <p key={i} className={ftStyles.timestamp}>{time}</p>
-          )}
+          ) : ""}
         </div>
         <div>
-          {nearbyTrucks.map((truck, i) =>
+          {nearbyTrucks ? nearbyTrucks.map((truck, i) =>
             <TruckTime
               key={i.toString() + truck.data.applicant}
               id={i}
@@ -81,7 +81,7 @@ export default function TruckSchedule({ nearbyTrucks }) {
               currentlyHovering={currentlyHovering}
               handleSelectTruck={handleSelectTruck}
               handleHoverTruck={handleHoverTruck}
-              {...truck.data}/>)}
+              {...truck.data}/>) : ""}
         </div>
       </div>
 
