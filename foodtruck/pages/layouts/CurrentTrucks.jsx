@@ -9,20 +9,21 @@ import InfoCard from '../components/InfoCard'
 export default function CurrentTrucks({ nearbyTrucks }) {
   const date = new Date()
   const currHour = date.getHours()
+  let [currentTrucks, setCurrentTrucks] = useState([])
 
   useEffect(() => {
     getCurrentTrucks()
-  }, [getCurrentTrucks, nearbyTrucks])
+  }, [nearbyTrucks])
 
   function getCurrentTrucks() {
-    let currentTrucks = nearbyTrucks.filter(truck => {
+    let currTrucks = nearbyTrucks.filter(truck => {
       let startTime = parseInt(truck.data.start24.split(":")[0])
       let endTime = parseInt(truck.data.end24.split(":")[0])
 
-      // return true
-      // FOR DEMO PURPOSES we won't use the current time
       return startTime <= currHour && endTime > currHour
     })
+
+    setCurrentTrucks(currTrucks)
   }
 
   return (
