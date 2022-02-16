@@ -3,6 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import ftStyles from '../../styles/TruckSchedule.module.scss'
 
+import InfoCard from '../components/InfoCard'
+
 function TruckTime({ id, handleSelectTruck, start24, end24 }) {
   const startTime = parseInt(start24.split(":")[0])
   const endTime = parseInt(end24.split(":")[0])
@@ -25,7 +27,7 @@ export default function TruckSchedule({ nearbyTrucks }) {
   let [selectedTruck, setSelectedTruck] = useState()
 
   function handleSelectTruck(i) {
-    setSelectedTruck(nearbyTrucks[i].data)
+    setSelectedTruck(nearbyTrucks[i])
   }
 
   let timeStamps = Array.from({length: 11}, (_, i) => i + 1)
@@ -51,10 +53,7 @@ export default function TruckSchedule({ nearbyTrucks }) {
 
       <div className={ftStyles.truckInfo}>
         {selectedTruck ?
-          <div>
-            <h3>{selectedTruck.applicant}</h3>
-            <p>{selectedTruck.optionaltext}</p>
-          </div>
+          <InfoCard distance={selectedTruck.distance} {...selectedTruck.data}/>
           :
           <div>
             <p>Hover over the schedule to view truck details</p>

@@ -11,37 +11,6 @@
   max-width: 840px;
 }
 
-.infoCard {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: $beige;
-  border-radius: 6px;
-  padding: 20px;
-  width: 240px;
-  min-width: 240px;
-}
-
-.info {
-  display: flex;
-  margin-bottom: 8px;
-  grid-column-gap: 10px;
-
-  p {
-    margin: 0px;
-    font-size: 0.9rem;
-  }
-
-  .hours {
-  opacity: 0.5;
-  }
-}
-
-.locInfo {
-  width: 200px;
-}
-
 .btn {
   width: 100%;
 }
