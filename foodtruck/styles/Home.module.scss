@@ -20,37 +20,6 @@
   align-items: center;
 }
 
-.section {
-  margin-top: 40px;
-}
-
-.foodTruckView {
-  min-width: 840px;
-}
-
-.search {
-  min-width: 300px;
-  padding: 10px;
-}
-
-.searchResults {
-  border: 1px solid lightgrey;
-
-  .searchEntry {
-    cursor: pointer;
-    padding: 5px 20px;
-    border-bottom: 1px solid $lightgrey;
-
-    &:hover {
-      background: $beige;
-    }
-
-    p {
-      margin: 0px;
-    }
-  }
-}
-
 .footer {
   display: flex;
   flex: 1;

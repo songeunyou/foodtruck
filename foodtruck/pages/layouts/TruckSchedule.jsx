@@ -5,6 +5,8 @@ import ftStyles from '../../styles/TruckSchedule.module.scss'
 
 import InfoCard from '../components/InfoCard'
 
+/*----- horizontal rectangle that represents a truck's operating hours -----*/
+
 function TruckTime({
   id,
   currentlySelected,
@@ -33,6 +35,20 @@ function TruckTime({
   )
 }
 
+/*------------- generate time stamps for the truck schedule -------------*/
+
+function timeStamps() {
+  let timeStamps = Array.from({length: 11}, (_, i) => i + 1)
+  timeStamps = timeStamps.concat(timeStamps)
+  timeStamps.unshift("🌑")
+  timeStamps.push("🌑")
+  timeStamps.splice(12, 0, "🌞")
+
+  return timeStamps
+}
+
+/*---------------------------- Truck Schedule ----------------------------*/
+
 export default function TruckSchedule({ nearbyTrucks }) {
   let [selectedTruck, setSelectedTruck] = useState(null)
   let [currentlySelected, setCurrentlySelected] = useState(null)
@@ -54,23 +70,14 @@ export default function TruckSchedule({ nearbyTrucks }) {
     setCurrentlySelected(i)
   }
 
-  let timeStamps = Array.from({length: 11}, (_, i) => i + 1)
-  timeStamps = timeStamps.concat(timeStamps)
-  timeStamps.unshift("🌑")
-  timeStamps.push("🌑")
-  timeStamps.splice(12, 0, "🌞")
-
-  // console.log(nearbyTrucks)
-
   return (
     <div className={ftStyles.schedule}>
       <div
         className={ftStyles.scheduleBG}
         onMouseLeave={() => setCurrentlyHovering(null)}>
         <div className={ftStyles.timestamps}>
-          {timeStamps ? timeStamps.map((time, i) =>
-            <p key={i} className={ftStyles.timestamp}>{time}</p>
-          ) : ""}
+          {timeStamps().map((time, i) =>
+            <p key={i} className={ftStyles.timestamp}>{time}</p>)}
         </div>
         <div>
           {nearbyTrucks ? nearbyTrucks.map((truck, i) =>
