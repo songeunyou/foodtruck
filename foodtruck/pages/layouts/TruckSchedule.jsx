@@ -38,7 +38,8 @@ function TruckTime({
 /*------------- generate time stamps for the truck schedule -------------*/
 
 function timeStamps() {
-  let timeStamps = Array.from({length: 11}, (_, i) => i + 1)
+  let timeStamps = Array.from(Array(12).keys())
+  timeStamps.shift()
   timeStamps = timeStamps.concat(timeStamps)
   timeStamps.unshift("🌑")
   timeStamps.push("🌑")
